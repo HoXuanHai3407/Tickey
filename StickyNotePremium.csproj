@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <EnableWindowsTargeting>true</EnableWindowsTargeting>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <LangVersion>12.0</LangVersion>
+    <AssemblyName>StickyNotePremium</AssemblyName>
+    <RootNamespace>StickyNotePremium</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="verification/**/*.cs" />
+  </ItemGroup>
+</Project>

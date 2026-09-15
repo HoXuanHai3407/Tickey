@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="..\Models\AppSettings.cs" Link="Models\AppSettings.cs" />
+    <Compile Include="..\Models\HolidayEvent.cs" Link="Models\HolidayEvent.cs" />
+    <Compile Include="..\Models\CountdownSnapshot.cs" Link="Models\CountdownSnapshot.cs" />
+    <Compile Include="..\Services\CountdownCalculator.cs" Link="Services\CountdownCalculator.cs" />
+    <Compile Include="..\Services\EventSelectionService.cs" Link="Services\EventSelectionService.cs" />
+    <Compile Include="..\Services\SettingsService.cs" Link="Services\SettingsService.cs" />
+  </ItemGroup>
+</Project>
