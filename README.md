@@ -1,28 +1,30 @@
 # Sticky Note Premium
 
-Ứng dụng đếm ngược dạng sticky note cho Windows, viết bằng **C# + WPF + .NET 8**. Giao diện chính nằm ngang theo phong cách ảnh mẫu, nhưng phần countdown giữa đã được đổi sang **Glassmorphism**: nền bán trong suốt, viền kính và lớp blur lấy từ chính hình nền phía sau.
+A sticky-note-style countdown application for Windows, built with **C# + WPF + .NET 8**. The main interface uses a horizontal layout inspired by the reference design, while the central countdown panel uses a **Glassmorphism** effect with a semi-transparent background, glass border, and a blurred version of the wallpaper behind it.
 
-## Tính năng
+## Features
 
-- Quản lý **nhiều ngày lễ / sự kiện cố định một lần** trong cùng một ứng dụng.
-- Chế độ **AUTO** tự chọn sự kiện tương lai gần nhất và cập nhật lại mỗi giây.
-- Khi một lễ đã qua, AUTO tự chuyển sang sự kiện tiếp theo; sự kiện cũ vẫn được giữ trong danh sách để sửa hoặc xóa.
-- Nút `‹` và `›` cho phép chuyển thủ công qua tất cả sự kiện theo thứ tự thời gian, kể cả sự kiện đã qua.
-- Bấm nút trạng thái `THỦ CÔNG • Bấm để AUTO` để quay lại chế độ AUTO.
-- Cửa sổ không viền, kéo thả tự do và có thể ghim nổi (`Always on top`).
-- Đồng hồ đếm ngược thời gian thực, cập nhật mỗi giây.
-- Khung countdown Glassmorphism dùng `VisualBrush` + `BlurEffect`, nền kính bán trong suốt, viền sáng và shadow mềm.
-- Đổi màu nền bằng mã HEX hoặc các màu mẫu.
-- Chọn ảnh nền JPG/JPEG/PNG/BMP và WebP nếu bộ giải mã ảnh của Windows hỗ trợ.
-- Chỉnh độ rõ ảnh, lớp phủ tối, cách co ảnh (`UniformToFill`, `Uniform`, `Fill`) và màu chữ (`Auto`, `Light`, `Dark`).
-- Tự lưu danh sách sự kiện, hình nền, vị trí và kích thước cửa sổ.
-- Tự migrate cấu hình cũ chỉ có một `EventName` + `TargetDateTime` sang danh sách sự kiện mới.
+- Manage **multiple one-time holidays / events** in a single application.
+- **AUTO mode** automatically selects the nearest upcoming event and refreshes every second.
+- When an event has passed, AUTO mode automatically switches to the next upcoming event. Past events remain in the list so they can still be edited or deleted.
+- Use the `‹` and `›` buttons to manually navigate through all events in chronological order, including past events.
+- Click the `MANUAL • Click to AUTO` status button to return to AUTO mode.
+- Borderless window with free dragging and `Always on top` support.
+- Real-time countdown updated every second.
+- Glassmorphism countdown panel using WPF `VisualBrush` + `BlurEffect`, with a semi-transparent glass layer, bright border, and soft shadow.
+- Change the background color using a HEX value or preset colors.
+- Select JPG/JPEG/PNG/BMP background images, with WebP support when a compatible Windows image decoder is available.
+- Adjust background image opacity, dark overlay, image stretch mode (`UniformToFill`, `Uniform`, `Fill`), and text color (`Auto`, `Light`, `Dark`).
+- Automatically saves the event list, background settings, window position, and window size.
+- Automatically migrates legacy configuration containing only `EventName` + `TargetDateTime` into the new multi-event format.
 
-## Yêu cầu để build source
+## Requirements for Building from Source
 
-Bạn **không cần Visual Studio 2022**. Chỉ cần Windows và **.NET 8 SDK**. Project target `net8.0-windows` và không dùng package NuGet bên thứ ba.
+You **do not need Visual Studio 2022**.
 
-Mở PowerShell **ngay tại thư mục có file `StickyNotePremium.csproj`**, rồi chạy:
+You only need Windows and the **.NET 8 SDK**. The project targets `net8.0-windows` and does not use any third-party NuGet packages.
+
+Open PowerShell **in the directory containing `StickyNotePremium.csproj`**, then run:
 
 ```powershell
 dotnet restore .\StickyNotePremium.csproj
@@ -30,88 +32,106 @@ dotnet build .\StickyNotePremium.csproj -c Release
 dotnet run --project .\StickyNotePremium.csproj -c Release
 ```
 
-Nếu chạy `dotnet build` ở thư mục cha không chứa `.csproj`/`.sln`, MSBuild sẽ báo `MSB1003`. Kiểm tra nhanh bằng:
+If you run `dotnet build` from a parent directory that does not contain a `.csproj` or `.sln` file, MSBuild will report error `MSB1003`.
+
+You can quickly verify that you are in the correct directory with:
 
 ```powershell
 dir *.csproj
 ```
 
-## Cách dùng nhiều sự kiện
+## Managing Multiple Events
 
-Mở `⚙` để vào phần **Sự kiện / ngày lễ**.
+Open `⚙` to access the **Events / Holidays** section.
 
-1. Bấm **`+ Sự kiện mới`**.
-2. Nhập tên, chọn ngày và nhập giờ dạng `HH:mm`.
-3. Bấm **`Lưu`**.
-4. Muốn sửa: chọn sự kiện trong danh sách, sửa thông tin rồi bấm `Lưu`.
-5. Muốn xóa: chọn sự kiện rồi bấm `Xóa`.
+1. Click **`+ New Event`**.
+2. Enter the event name, select a date, and enter the time in `HH:mm` format.
+3. Click **`Save`**.
+4. To edit an event, select it from the list, update its information, then click `Save`.
+5. To delete an event, select it and click `Delete`.
 
-Danh sách được sắp theo ngày giờ. Sự kiện đã qua không bị xóa tự động.
+Events are sorted by date and time. Past events are not automatically deleted.
 
-### AUTO và chuyển thủ công
+### AUTO Mode and Manual Navigation
 
-- `AUTO • Lễ gần nhất`: app chọn sự kiện có thời gian lớn hơn hiện tại và gần nhất.
-- Khi mốc đó qua, lần refresh tiếp theo sẽ tự chọn sự kiện tương lai kế tiếp.
-- Bấm `‹` hoặc `›` sẽ chuyển sang chế độ thủ công.
-- Trong chế độ thủ công, app giữ nguyên sự kiện đang xem dù thời gian trôi qua.
-- Bấm nút trạng thái phía dưới để trở lại AUTO.
-- Nếu không còn sự kiện tương lai, đồng hồ về `00:00:00` nhưng các sự kiện cũ vẫn còn trong danh sách.
+- `AUTO • Nearest Event`: the app automatically selects the nearest event whose target time is still in the future.
+- Once that target time has passed, the next refresh automatically switches to the next upcoming event.
+- Clicking `‹` or `›` switches the app to manual mode.
+- In manual mode, the app keeps displaying the selected event even as time passes.
+- Click the status button below the countdown to return to AUTO mode.
+- If there are no upcoming events, the countdown displays `00:00:00`, while past events remain available in the event list.
 
-## Hình nền và Glassmorphism
+## Background Images and Glassmorphism
 
-Trong cài đặt:
+In Settings:
 
-- `Chọn hình...`: chọn ảnh nền.
-- `Xóa hình nền`: quay về màu nền đơn.
-- `Độ rõ hình nền`: chỉnh opacity ảnh.
-- `Lớp phủ tối`: tăng khả năng đọc chữ.
-- Khung countdown Glassmorphism lấy mẫu phần nền phía sau bằng WPF `VisualBrush`, sau đó dùng `BlurEffect` và lớp trắng bán trong suốt để tạo cảm giác kính liền mạch.
+- `Choose Image...`: select a background image.
+- `Remove Background Image`: return to a solid background color.
+- `Background Image Opacity`: adjust the image opacity.
+- `Dark Overlay`: improve text readability over bright images.
+- The Glassmorphism countdown panel samples the background behind it using WPF `VisualBrush`, then applies `BlurEffect` and a semi-transparent white layer to create a seamless glass effect.
 
-> **WebP:** WPF dựa vào bộ giải mã hình ảnh có trên Windows. JPG/PNG/BMP hoạt động mặc định. WebP chỉ hoạt động khi Windows/bộ codec trên máy hỗ trợ; nếu không, app dùng màu nền dự phòng và hiển thị lỗi không chặn ứng dụng.
+> **WebP:** WPF relies on image decoders available in Windows. JPG, PNG, and BMP work by default. WebP works only when Windows or an installed codec supports it. If WebP cannot be decoded, the application falls back to the configured background color and displays a non-blocking error.
 
-## Dữ liệu cấu hình
+## Configuration Data
 
-Ứng dụng lưu tại:
+The application stores its settings at:
 
 ```text
 %LocalAppData%\StickyNotePremium\settings.json
 ```
 
-Dữ liệu gồm danh sách `Events`, màu/ảnh nền, độ trong suốt, lớp phủ, kiểu co ảnh, màu chữ, ghim nổi, vị trí và kích thước cửa sổ.
+The configuration includes:
 
-Nếu bạn đang dùng bản cũ, file JSON có `EventName` và `TargetDateTime` sẽ được tự động migrate thành phần tử đầu tiên trong `Events` khi app khởi động.
+- `Events` list
+- Background color and image
+- Background image opacity
+- Dark overlay
+- Image stretch mode
+- Text color mode
+- Always-on-top setting
+- Window position
+- Window size
 
-## Publish bản chạy Windows
+If you are upgrading from an older version, a JSON configuration containing `EventName` and `TargetDateTime` will automatically be migrated into the first item of the `Events` collection when the application starts.
 
-Bản framework-dependent `win-x64`:
+## Publishing the Windows Application
+
+To create a framework-dependent `win-x64` build:
 
 ```powershell
 .\build-release.ps1
 ```
 
-Bản self-contained, máy đích không cần cài .NET Runtime:
+To create a self-contained build that does not require the .NET Runtime to be installed on the target computer:
 
 ```powershell
 .\build-release.ps1 -SelfContained
 ```
 
-Output nằm trong:
+The output will be available in:
 
 ```text
 publish\win-x64\
 ```
 
-## Kiểm tra logic
+## Logic Verification
 
-Chạy chương trình verification bằng .NET SDK:
+Run the verification project using the .NET SDK:
 
 ```powershell
 dotnet run --project .\verification\StickyNotePremium.Verification.csproj
 ```
 
-Nó kiểm tra countdown, AUTO chọn lễ gần nhất, bỏ qua sự kiện đã hết hạn khi tự chọn, lưu/đọc nhiều sự kiện và migration cấu hình cũ.
+The verification project checks:
 
-Trong môi trường không có .NET SDK, có thể chạy static regression checks:
+- Countdown calculations
+- AUTO selection of the nearest upcoming event
+- Skipping expired events during automatic selection
+- Saving and loading multiple events
+- Migration from the legacy single-event configuration
+
+In environments where the .NET SDK is unavailable, you can run the static regression checks with:
 
 ```powershell
 python verification\verify_source.py
